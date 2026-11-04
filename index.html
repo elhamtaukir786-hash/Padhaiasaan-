@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PadhaiAasaan</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#08111f;color:white;
+ font-family:Arial,sans-serif;padding:20px;
+}
+header{text-align:center;padding:25px 5px}
+h1{color:#55e6c1;font-size:32px}
+header p{color:#b8c7d9}
+.card{
+ background:#14243a;padding:20px;
+ border-radius:16px;margin:18px auto;
+ max-width:700px;
+}
+input,select,button{
+ width:100%;padding:14px;margin:8px 0;
+ border-radius:9px;border:none;font-size:16px;
+}
+input,select{background:#eaf2ff;color:#101b2b}
+button{
+ background:#36d6b0;color:#061b20;
+ font-weight:bold;cursor:pointer;
+}
+button.secondary{background:#263c58;color:white}
+#lesson{line-height:1.7;color:#e1eafa}
+footer{text-align:center;color:#8da2bd;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>📚 PadhaiAasaan</h1>
+<p>Learn from Zero. Understand Everything.</p>
+<p>Apni padhai ko aasaan banao!</p>
+</header>
+
+<div class="card">
+<h2>🎓 Start Learning</h2>
+
+<input id="chapter" placeholder="Chapter ka naam likho">
+
+<select id="subject">
+<option>Physics</option>
+<option>Chemistry</option>
+<option>Biology</option>
+<option>Mathematics</option>
+<option>English</option>
+<option>Hindi</option>
+</select>
+
+<select id="level">
+<option>Beginner - Zero se</option>
+<option>Board Exam Preparation</option>
+<option>Revision</option>
+</select>
+
+<button onclick="startLearning()">Start Chapter 🚀</button>
+</div>
+
+<div class="card">
+<h2>🎬 Your Lesson</h2>
+<div id="lesson">
+<p>Apna chapter name likho aur Start Chapter dabao.</p>
+</div>
+<button onclick="speakLesson()">🔊 Listen to Lesson</button>
+<button class="secondary" onclick="stopSpeech()">⏹ Stop Voice</button>
+</div>
+
+<div class="card">
+<h2>📝 Quick Practice</h2>
+<p id="question">Pehle chapter start karo.</p>
+<input id="answer" placeholder="Apna answer likho">
+<button onclick="checkAnswer()">Check Answer</button>
+<p id="result"></p>
+</div>
+
+<footer>
+PadhaiAasaan © 2026<br>
+Learn Smart • Study Better
+</footer>
+
+<script>
+let currentAnswer = "";
+
+function startLearning(){
+ let chapter=document.getElementById("chapter").value.trim();
+ let subject=document.getElementById("subject").value;
+ let level=document.getElementById("level").value;
+
+ if(!chapter){
+ alert("Pehle chapter ka naam likho!");
+ return;
+ }
+
+ let lesson=`
+ <h2>${chapter}</h2>
+ <p><b>Subject:</b> ${subject}</p>
+ <p><b>Level:</b> ${level}</p>
+ <h3>1. Introduction</h3>
+ <p>${chapter} ko hum bilkul basic level se samjhenge.
+ Is topic ka main purpose concepts ko samajhna hai.</p>
+ <h3>2. Simple Example</h3>
+ <p>Har naye concept ko real-life example se samajhne ki koshish karo.
+ Example samajhne ke baad definition aur formula yaad karna aasaan hota hai.</p>
+ <h3>3. Important Points</h3>
+ <ul>
+ <li>Sabse pehle basic definition samjho.</li>
+ <li>Important terms aur formulas note karo.</li>
+ <li>Examples aur questions practice karo.</li>
+ <li>Board exam ke liye definitions aur diagrams revise karo.</li>
+ </ul>
+ <p><b>Note:</b> Yeh abhi demo lesson hai. Full AI teaching ke liye AI connection baad mein add karna hoga.</p>
+ `;
+
+ document.getElementById("lesson").innerHTML=lesson;
+ document.getElementById("question").innerText=
+ "Tumne kaunsa chapter select kiya?";
+ currentAnswer=chapter.toLowerCase();
+ document.getElementById("result").innerText="";
+}
+
+function speakLesson(){
+ let text=document.getElementById("lesson").innerText;
+ let speech=new SpeechSynthesisUtterance(text);
+ speech.lang="en-IN";
+ speech.rate=0.9;
+ speechSynthesis.cancel();
+ speechSynthesis.speak(speech);
+}
+
+function stopSpeech(){
+ speechSynthesis.cancel();
+}
+
+function checkAnswer(){
+ let answer=document.getElementById("answer").value.trim().toLowerCase();
+ if(answer===currentAnswer && currentAnswer!==""){
+ document.getElementById("result").innerText="Correct! Well done 🎉";
+ }else{
+ document.getElementById("result").innerText=
+ "Abhi answer match nahi hua. Chapter ka naam likh kar try karo.";
+ }
+}
+</script>
+
+</body>
+</html>
